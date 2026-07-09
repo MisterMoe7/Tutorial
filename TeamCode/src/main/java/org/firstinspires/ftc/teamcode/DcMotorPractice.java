@@ -1,38 +1,45 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.mechanism.MertleSquadBot;
+import org.firstinspires.ftc.teamcode.mechanism.TestBench;
+
 @TeleOp
 public class DcMotorPractice extends OpMode {
-    MertleSquadBot intake = new MertleSquadBot();
-    MertleSquadBot shooterL = new MertleSquadBot();
-    MertleSquadBot shooterR = new MertleSquadBot();
+    TestBench bench = new TestBench();
+
     @Override
     public void init() {
-        intake.init(hardwareMap);
-        shooterL.init(hardwareMap);
-        shooterR.init(hardwareMap);
+
+        bench.init(hardwareMap);
+
+
     }
 
     @Override
     public void loop() {
 
-        boolean running = false;
 
         if (gamepad1.a) {
-            intake.setMotorSpeed(1);
-        } else if (!gamepad1.a) {
-            intake.setMotorSpeed(0);
+            bench.setMotorZeroBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        } else if (gamepad1.b) {
+            bench.setMotorZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
-        if (gamepad1.b) {
-            shooterL.setShooterLSpeed(1);
-            shooterR.setShooterRSpeed(1);
-        } else if (!gamepad1.b) {
-            shooterL.setShooterLSpeed(0);
-            shooterR.setShooterRSpeed(0);
+
+        if (bench.getTouchSensorState()) {
+            bench.setMotorSpeed(0.5);
+        } else {
+            bench.setMotorSpeed(0);
         }
+        telemetry.addData("Motor Revs", bench.getMotorRevs());
+
+
+
+
     }
 }
