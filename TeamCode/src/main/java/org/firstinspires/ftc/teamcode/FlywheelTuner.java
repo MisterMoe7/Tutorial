@@ -15,7 +15,7 @@ public class FlywheelTuner extends OpMode {
     public double highVelocity = 1500;
     public double lowVelocity = 900;
 
-    double curTargetVelocity = highVelocity;
+    double curTargetVelocity = lowVelocity;
 
     double P = 0;
     double F = 0;
@@ -45,22 +45,24 @@ public class FlywheelTuner extends OpMode {
             }
         }
 
+
+
         if (gamepad1.bWasPressed()) {
             stepIndex = (stepIndex + 1) % stepSizes.length;
         }
 
         if (gamepad1.dpadLeftWasPressed()) {
-            P -= stepSizes[stepIndex];
+            F -= stepSizes[stepIndex];
         }
         if (gamepad1.dpadRightWasPressed()) {
-            P += stepSizes[stepIndex];
+            F += stepSizes[stepIndex];
         }
 
         if (gamepad1.dpadUpWasPressed()) {
-            F += stepSizes[stepIndex];
+            P += stepSizes[stepIndex];
         }
         if (gamepad1.dpadDownWasPressed()) {
-            F -= stepSizes[stepIndex];
+            P -= stepSizes[stepIndex];
         }
 
 
@@ -76,8 +78,8 @@ public class FlywheelTuner extends OpMode {
         telemetry.addData("Current Velocity", curVelocity);
         telemetry.addData("Error", "%.2f", error);
         telemetry.addLine("-----------------------------");
-        telemetry.addData("Tuning P", "%.4f (D-Pad U/D", F);
-        telemetry.addData("Tuning F", "%.4f (D-Pad L/R)", P);
+        telemetry.addData("Tuning P", "%.4f (D-Pad U/D", P);
+        telemetry.addData("Tuning F", "%.4f (D-Pad L/R)", F);
         telemetry.addData("Step Size", "%.4f (B Button)", stepSizes[stepIndex]);
     }
 }
