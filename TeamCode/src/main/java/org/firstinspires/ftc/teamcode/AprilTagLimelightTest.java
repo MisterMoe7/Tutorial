@@ -29,9 +29,13 @@ public class AprilTagLimelightTest extends OpMode {
         RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
-        limelight.start();
+
     }
 
+    public void start() {
+        limelight.start();
+        imu.resetYaw();
+    }
 
     @Override
     public void loop() {
