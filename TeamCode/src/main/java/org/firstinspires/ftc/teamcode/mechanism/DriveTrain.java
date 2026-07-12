@@ -38,4 +38,11 @@ public class DriveTrain {
         FRDrive.setMode(runMode);
     }
 
+    public void strafe(double power) {
+        FLDrive.setPower(power);
+        BLDrive.setPower(-power);
+        BRDrive.setPower(power);
+        FRDrive.setPower(-power);
+    }
+
 }

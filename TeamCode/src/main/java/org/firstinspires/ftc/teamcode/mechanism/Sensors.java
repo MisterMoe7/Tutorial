@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.mechanism;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -12,6 +13,8 @@ public class Sensors {
 
     private DigitalChannel touchSensor;
     private DistanceSensor distance;
+    private LED redLed;
+    private LED greenLed;
     private NormalizedColorSensor colorSensor;
     public enum DetectedColor {
         RED,
@@ -25,6 +28,10 @@ public class Sensors {
         touchSensor = hwMap.get(DigitalChannel.class, "touch_sensor");
 
         distance = hwMap.get(DistanceSensor.class, "distance_sensor");
+
+        redLed = hwMap.get(LED.class, "red_led");
+
+        greenLed = hwMap.get(LED.class, "green_led");
 
         colorSensor = hwMap.get(NormalizedColorSensor.class, "color_sensor");
         colorSensor.setGain(15);
@@ -57,6 +64,22 @@ public class Sensors {
             return Sensors.DetectedColor.YELLOW;
         } else {
             return Sensors.DetectedColor.UNKNOWN;
+        }
+    }
+
+    public void setLEDColor(double color0123) {
+        if (color0123 == 0) {
+            redLed.off();
+            greenLed.off();
+        } else if (color0123 == 1) {
+            redLed.on();
+            greenLed.off();
+        } else if (color0123 == 2) {
+            redLed.on();
+            greenLed.on();
+        } else if (color0123 == 3) {
+            redLed.off();
+            greenLed.on();
         }
     }
 }
