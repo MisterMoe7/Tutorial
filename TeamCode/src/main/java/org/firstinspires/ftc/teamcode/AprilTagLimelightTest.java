@@ -44,13 +44,20 @@ public class AprilTagLimelightTest extends OpMode {
         LLResult llResult = limelight.getLatestResult();
         if (llResult != null && llResult.isValid()) {
             Pose3D botpose = llResult.getBotpose_MT2();
+            double distance = getDistanceFromTag(llResult.getTa());
             telemetry.addData("Tx", llResult.getTx());
             telemetry.addData("Ty", llResult.getTy());
             telemetry.addData("Ta", llResult.getTa());
-            telemetry.addData("Bot Pose", botpose.toString());
-            telemetry.addData("Yaw", botpose.getOrientation().getYaw());
+            telemetry.addData("Distance", distance);
             telemetry.addData("Yaw?", imu.getRobotYawPitchRollAngles().getYaw());
         }
 
     }
+
+    public double getDistanceFromTag(double ta) {
+        double scale = 179.481;
+        double distance =  scale * Math.pow(ta, -0.5608);
+        return distance;
+    }
+
 }
